@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>培嘉卡片盒</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    /* Lucide icon sizing */
+    .lucide {
+      display: inline-block;
+      vertical-align: middle;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .icon-sm  { width: 14px; height: 14px; }
+    .icon-md  { width: 16px; height: 16px; }
+    .icon-lg  { width: 20px; height: 20px; }
+    .icon-xl  { width: 24px; height: 24px; }
+  </style>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ph-bg:        #ffffff;
+      --ph-page-bg:   #f8f8f8;
+      --ph-text:      #585858;
+      --ph-text-lt:   #9d9d9d;
+      --ph-accent:    #f2849e;
+      --ph-accent-dk: #ee5f81;
+      --ph-border:    #c9c9c9;
+      --ph-dark:      #1c1c1c;
+      --ph-dark2:     #2b2b2b;
+
+      --tc1: #f2849e;
+      --tc2: #7ecaf6;
+      --tc3: #7bd0c1;
+      --tc4: #c75b9b;
+      --tc5: #ae85ca;
+      --tc6: #8499e7;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ph-page-bg);
+      color: var(--ph-text);
+      font-family: 'Source Sans 3', 'Source Sans Pro', 'PingFang TC',
+                   'Microsoft JhengHei', Helvetica, sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.75;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* ── Header ── */
+    #site-header {
+      background: var(--ph-dark);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.4);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .logo {
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+      flex-shrink: 0;
+    }
+
+    .logo-title {
+      font-size: 0.88rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: #ffffff;
+      transition: color 0.2s;
+    }
+
+    .logo:hover .logo-title { color: var(--ph-accent); }
+
+    .header-nav {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-btn {
+      height: 34px;
+      padding: 0 1.1rem;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 3px;
+      background: transparent;
+      color: rgba(255,255,255,0.75);
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-btn:hover {
+      border-color: var(--ph-accent);
+      color: var(--ph-accent);
+      background: rgba(242,132,158,0.07);
+    }
+
+    .nav-btn.primary {
+      background: var(--ph-accent);
+      border-color: var(--ph-accent);
+      color: #ffffff;
+    }
+
+    .nav-btn.primary:hover {
+      background: var(--ph-accent-dk);
+      border-color: var(--ph-accent-dk);
+      color: #ffffff;
+    }
+
+    .header-sub {
+      background: var(--ph-dark2);
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,255,0.35);
+      padding: 0.3rem 2rem;
+      min-height: 1.6rem;
+    }
+
+    /* ── Page wrapper ── */
+    #page-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+    }
+
+    /* ── Section headings ── */
+    .ph-section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: solid 1px var(--ph-border);
+    }
+
+    .ph-section-header h2 {
+      font-size: 0.85rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--ph-text);
+    }
+
+    /* ── Phantom Tiles (Home / Category grid) ── */
+    .tiles {
+      display: flex;
+      flex-wrap: wrap;
+      margin: -1.25em 0 0 -1.25em;
+    }
+
+    .tile {
+      width: calc(33.333% - 1.25em);
+      margin: 1.25em 0 0 1.25em;
+      min-height: 210px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 3px;
+      cursor: pointer;
+      background-color: var(--tile-color, var(--tc1));
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    /* X-pattern overlay — identical to Phantom */
+    .tile::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline%7Bstroke-width%3A0.25px%3Bstroke%3A%23ffffff%3B%7D%3C/style%3E%3Cline x1='0' y1='0' x2='100' y2='100'/%3E%3Cline x1='100' y1='0' x2='0' y2='100'/%3E%3C/svg%3E");
+      background-size: 100% 100%;
+      opacity: 0.22;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      z-index: 1;
+    }
+
+    .tile:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+
+    .tile:hover::after { opacity: 0.06; }
+
+    .tile-body {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2em 1.5em;
+      color: #ffffff;
+      transition: opacity 0.3s;
+    }
+
+    .tile-body h3 {
+      font-size: 1.15rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      line-height: 1.3;
+      margin-bottom: 0.5em;
+    }
+
+    .tile-count {
+      font-size: 0.78rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+    }
+
+    .tile-enter {
+      display: none;
+      margin-top: 0.8em;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tile:hover .tile-enter { display: block; opacity: 1; }
+
+    .tile-acts {
+      position: absolute;
+      top: 0.7em;
+      right: 0.7em;
+      z-index: 3;
+      display: flex;
+      gap: 0.3em;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .tile:hover .tile-acts { opacity: 1; }
+
+    .tile-act-btn {
+      width: 28px;
+      height: 28px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 3px;
+      color: white;
+      cursor: pointer;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .tile-act-btn:hover { background: rgba(255,255,255,0.35); }
+    .tile-act-btn.danger:hover { background: rgba(239,68,68,0.7); }
+
+    @media (max-width: 980px) {
+      .tile { width: calc(50% - 1.25em); }
+    }
+    @media (max-width: 600px) {
+      .tile { width: calc(100% - 1.25em); min-height: 160px; }
+    }
+
+    /* ── Note Cards (category view) ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .note-card {
+      background: var(--ph-bg);
+      border-top: 3px solid var(--card-accent, var(--ph-accent));
+      border-left: 1px solid var(--ph-border);
+      border-right: 1px solid var(--ph-border);
+      border-bottom: 1px solid var(--ph-border);
+      border-radius: 0 0 3px 3px;
+      padding: 1.3rem 1.2rem 1rem;
+      cursor: pointer;
+      position: relative;
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .note-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    }
+
+    .note-card h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ph-dark);
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+      padding-right: 3rem;
+      letter-spacing: 0.02em;
+    }
+
+    .note-card .preview {
+      font-size: 0.82rem;
+      color: var(--ph-text-lt);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .note-card .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.8rem;
+    }
+
+    .note-card .card-acts {
+      position: absolute;
+      top: 0.7rem;
+      right: 0.7rem;
+      display: flex;
+      gap: 0.25rem;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .note-card:hover .card-acts { opacity: 1; }
+
+    .card-act-btn {
+      width: 26px;
+      height: 26px;
+      background: var(--ph-page-bg);
+      border: 1px solid var(--ph-border);
+      border-radius: 3px;
+      color: var(--ph-text-lt);
+      cursor: pointer;
+      font-size: 0.72rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .card-act-btn:hover { border-color: var(--ph-text); color: var(--ph-text); }
+    .card-act-btn.danger:hover { border-color: #ef4444; color: #ef4444; background: #fff0f0; }
+
+    /* ── Tags ── */
+    .tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 2px;
+      background: rgba(242,132,158,0.12);
+      color: var(--ph-accent);
+    }
+
+    .tag.clickable { cursor: pointer; }
+    .tag.clickable:hover { background: rgba(242,132,158,0.25); }
+
+    /* ── Card Detail ── */
+    .card-detail {
+      background: var(--ph-bg);
+      border-left: 4px solid var(--ph-accent);
+      padding: 2.5rem 2.5rem 2rem;
+      max-width: 760px;
+      border-radius: 0 3px 3px 0;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .card-detail-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .card-detail h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--ph-dark);
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .card-detail .detail-btns {
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+      padding-top: 0.2rem;
+    }
+
+    .card-detail .content {
+      font-size: 1rem;
+      line-height: 1.85;
+      white-space: pre-wrap;
+      color: var(--ph-text);
+    }
+
+    .card-meta {
+      margin-top: 1.8rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--ph-border);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .card-meta-label {
+      font-size: 0.7rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--ph-text-lt);
+    }
+
+    .card-meta .tag-list { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+    /* ── Linked section ── */
+    .linked-section {
+      margin-top: 1.8rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--ph-border);
+    }
+
+    .linked-section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .linked-section-title {
+      font-size: 0.7rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--ph-text-lt);
+    }
+
+    .linked-count {
+      font-size: 0.68rem;
+      font-weight: 900;
+      background: var(--ph-border);
+      color: var(--ph-text-lt);
+      padding: 0.1rem 0.45rem;
+      border-radius: 2px;
+    }
+
+    .linked-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .linked-card-item {
+      border: 1px solid var(--ph-border);
+      border-top: 2px solid var(--ph-accent);
+      border-radius: 0 0 3px 3px;
+      padding: 0.9rem;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+      background: var(--ph-page-bg);
+    }
+
+    .linked-card-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.09);
+      border-top-color: var(--ph-accent-dk);
+    }
+
+    .lc-cats {
+      font-size: 0.66rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ph-text-lt);
+      margin-bottom: 0.3rem;
+    }
+
+    .lc-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--ph-dark);
+      margin-bottom: 0.3rem;
+      line-height: 1.3;
+    }
+
+    .lc-preview {
+      font-size: 0.75rem;
+      color: var(--ph-text-lt);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ── Phantom Buttons ── */
+    .ph-btn {
+      display: inline-block;
+      height: 2.75em;
+      line-height: 2.75em;
+      padding: 0 1.5em;
+      border: solid 1px var(--ph-border);
+      border-radius: 3px;
+      background: transparent;
+      color: var(--ph-text);
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .ph-btn:hover { border-color: var(--ph-accent); color: var(--ph-accent); }
+    .ph-btn:active { background: rgba(242,132,158,0.08); }
+
+    .ph-btn.primary {
+      background: var(--ph-dark);
+      border-color: var(--ph-dark);
+      color: #ffffff;
+    }
+
+    .ph-btn.primary:hover {
+      background: var(--ph-accent);
+      border-color: var(--ph-accent);
+      color: #ffffff;
+    }
+
+    .ph-btn.danger {
+      border-color: #ef4444;
+      color: #ef4444;
+    }
+
+    .ph-btn.danger:hover { background: #ef4444; color: white; }
+
+    .ph-btn.sm {
+      height: 2.2em;
+      line-height: 2.2em;
+      padding: 0 1em;
+      font-size: 0.68rem;
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 5rem 2rem;
+      color: var(--ph-text-lt);
+    }
+
+    .empty-state .es-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.3;
+    }
+
+    .empty-state p {
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20,20,20,0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      padding: 1rem;
+      backdrop-filter: blur(3px);
+    }
+
+    .modal {
+      background: var(--ph-bg);
+      border-radius: 3px;
+      padding: 2rem 2.2rem;
+      width: 100%;
+      max-width: 520px;
+      max-height: 88vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+
+    .modal-sm { max-width: 380px; }
+
+    .modal h2 {
+      font-size: 0.82rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--ph-dark);
+      margin-bottom: 1.6rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--ph-border);
+    }
+
+    .form-group { margin-bottom: 1.2rem; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ph-text-lt);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.65rem 0.9rem;
+      border: 1px solid var(--ph-border);
+      border-radius: 3px;
+      background: var(--ph-page-bg);
+      color: var(--ph-text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 400;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--ph-accent);
+    }
+
+    .form-group textarea { height: 145px; resize: vertical; line-height: 1.7; }
+
+    /* Cat chips */
+    .cat-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+
+    .cat-chip {
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--ph-border);
+      border-radius: 2px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      color: var(--ph-text-lt);
+      background: var(--ph-page-bg);
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .cat-chip:hover { border-color: var(--ph-accent); color: var(--ph-accent); }
+
+    .cat-chip.selected {
+      border-color: var(--ph-accent);
+      background: rgba(242,132,158,0.1);
+      color: var(--ph-accent);
+    }
+
+    /* Link search */
+    .link-search-input-wrap input { border-radius: 3px 3px 0 0; }
+
+    .link-results {
+      border: 1px solid var(--ph-border);
+      border-top: none;
+      border-radius: 0 0 3px 3px;
+      max-height: 155px;
+      overflow-y: auto;
+      background: white;
+    }
+
+    .link-results:empty { display: none; }
+
+    .link-result-item {
+      padding: 0.5rem 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      border-bottom: 1px solid var(--ph-border);
+      transition: background 0.1s;
+    }
+
+    .link-result-item:last-child { border-bottom: none; }
+    .link-result-item:hover { background: var(--ph-page-bg); }
+    .link-result-item.is-linked { color: var(--ph-accent); }
+
+    .lr-left { display: flex; flex-direction: column; gap: 1px; }
+    .lr-meta { font-size: 0.7rem; color: var(--ph-text-lt); }
+    .lr-check { font-size: 1rem; min-width: 20px; text-align: center; }
+
+    .linked-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.55rem; }
+
+    .linked-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(123,208,193,0.15);
+      border: 1px solid #7bd0c1;
+      color: #3d9e91;
+      border-radius: 2px;
+      padding: 0.2rem 0.55rem 0.2rem 0.7rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .linked-tag-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: inherit;
+      padding: 0;
+      font-size: 0.9rem;
+      line-height: 1;
+      opacity: 0.55;
+      font-family: inherit;
+    }
+
+    .linked-tag-remove:hover { opacity: 1; }
+
+    /* Modal footer */
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.7rem;
+      margin-top: 1.6rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--ph-border);
+    }
+
+    .confirm-msg {
+      font-size: 0.92rem;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--ph-text);
+      margin: 0.5rem 0 0.2rem;
+    }
+
+    /* ── FAB ── */
+    .fab {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--ph-dark);
+      color: white;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .fab:hover {
+      background: var(--ph-accent);
+      transform: scale(1.1);
+      box-shadow: 0 6px 22px rgba(242,132,158,0.45);
+    }
+
+    .hidden { display: none !important; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--ph-border); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header id="site-header">
+  <div class="header-inner">
+    <div class="logo" onclick="showHome()">
+      <span class="logo-title">培嘉卡片盒</span>
+    </div>
+    <nav class="header-nav">
+      <button class="nav-btn hidden" id="home-btn" onclick="showHome()"><i data-lucide="house" class="lucide icon-md"></i> 首頁</button>
+      <button class="nav-btn hidden" id="back-btn" onclick="goBack()"><i data-lucide="arrow-left" class="lucide icon-md"></i> 返回</button>
+      <button class="nav-btn primary" onclick="openCardModal()"><i data-lucide="file-plus" class="lucide icon-md"></i> 新增卡片</button>
+    </nav>
+  </div>
+  <div class="header-sub" id="breadcrumb"></div>
+</header>
+
+<!-- ── Main ── -->
+<div id="page-wrapper">
+  <div id="main-content"></div>
+</div>
+
+<!-- ── FAB ── -->
+<button class="fab hidden" id="fab" title="新增目錄"><i data-lucide="plus" class="lucide icon-xl"></i></button>
+
+<!-- ── Card Modal ── -->
+<div class="modal-overlay hidden" id="card-modal">
+  <div class="modal">
+    <h2 id="card-modal-title">新增卡片</h2>
+    <div class="form-group">
+      <label>標題</label>
+      <input type="text" id="card-title" placeholder="輸入卡片標題…">
+    </div>
+    <div class="form-group">
+      <label>內容</label>
+      <textarea id="card-content" placeholder="輸入卡片內容…"></textarea>
+    </div>
+    <div class="form-group">
+      <label>指定目錄（可多選）</label>
+      <div class="cat-chips" id="cat-chips"></div>
+    </div>
+    <div class="form-group">
+      <label>連結其他卡片（可搜尋、多選）</label>
+      <div class="link-search-input-wrap">
+        <input type="text" id="link-search" placeholder="輸入標題或內容搜尋…" oninput="filterLinkSearch()" autocomplete="off">
+        <div class="link-results" id="link-results"></div>
+      </div>
+      <div class="linked-tags" id="linked-tags"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="ph-btn" onclick="closeModal('card-modal')">取消</button>
+      <button class="ph-btn primary" onclick="saveCard()">儲存卡片</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Category Modal ── -->
+<div class="modal-overlay hidden" id="category-modal">
+  <div class="modal modal-sm">
+    <h2 id="cat-modal-title">新增目錄</h2>
+    <div class="form-group">
+      <label>目錄名稱</label>
+      <input type="text" id="cat-name" placeholder="輸入目錄名稱…">
+    </div>
+    <div class="modal-footer">
+      <button class="ph-btn" onclick="closeModal('category-modal')">取消</button>
+      <button class="ph-btn primary" onclick="saveCategory()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Link Manager Modal ── -->
+<div class="modal-overlay hidden" id="link-manager-modal">
+  <div class="modal modal-sm" style="max-width:460px">
+    <h2>管理連結</h2>
+    <div class="form-group">
+      <label>搜尋並新增連結</label>
+      <div class="link-search-input-wrap">
+        <input type="text" id="lm-search" placeholder="輸入標題或內容搜尋…" oninput="filterLMSearch()" autocomplete="off">
+        <div class="link-results" id="lm-results"></div>
+      </div>
+      <div class="linked-tags" id="lm-tags"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="ph-btn" onclick="closeModal('link-manager-modal')">取消</button>
+      <button class="ph-btn primary" onclick="saveLinkManager()">儲存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Confirm Modal ── -->
+<div class="modal-overlay hidden" id="confirm-modal">
+  <div class="modal modal-sm">
+    <h2>確認刪除</h2>
+    <p class="confirm-msg" id="confirm-msg"></p>
+    <div class="modal-footer">
+      <button class="ph-btn" onclick="closeModal('confirm-modal')">取消</button>
+      <button class="ph-btn danger" id="confirm-ok">確認刪除</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════
+//  Data layer
+// ════════════════════════════════════════════
+
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+const TILE_COLORS = ['#f2849e','#7ecaf6','#7bd0c1','#c75b9b','#ae85ca','#8499e7'];
+
+function catColor(idx) { return TILE_COLORS[idx % TILE_COLORS.length]; }
+
+const SEED = {
+  categories: [
+    { id: 'c1', name: '生命經驗', createdAt: Date.now() },
+    { id: 'c2', name: '個人洞見', createdAt: Date.now() },
+    { id: 'c3', name: '知識蒸餾', createdAt: Date.now() },
+  ],
+  cards: [
+    {
+      id: 'k1', title: '範本一', categoryIds: ['c1'], links: ['k4'], createdAt: Date.now(),
+      content: '這是「生命經驗」的第一張範本卡片。\n\n你可以在這裡記錄你的生命故事、重要時刻或深刻感受。每一段經歷都值得被好好珍藏。'
+    },
+    {
+      id: 'k2', title: '範本二', categoryIds: ['c1'], links: [], createdAt: Date.now(),
+      content: '這是「生命經驗」的第二張範本卡片。\n\n生命中哪些時刻讓你覺得最真實？哪些選擇改變了你的方向？'
+    },
+    {
+      id: 'k3', title: '範本三', categoryIds: ['c1'], links: [], createdAt: Date.now(),
+      content: '這是「生命經驗」的第三張範本卡片。\n\n試著回憶那些讓你成長的挑戰，以及你從中學到了什麼。'
+    },
+    {
+      id: 'k4', title: '範本一', categoryIds: ['c2'], links: ['k7'], createdAt: Date.now(),
+      content: '這是「個人洞見」的第一張範本卡片。\n\n記錄你對事物的獨到看法與思考。洞見往往來自反覆咀嚼同一個問題。'
+    },
+    {
+      id: 'k5', title: '範本二', categoryIds: ['c2'], links: [], createdAt: Date.now(),
+      content: '這是「個人洞見」的第二張範本卡片。\n\n你最近有哪些讓你驚喜的發現？是關於自己、關於他人、還是關於這個世界？'
+    },
+    {
+      id: 'k6', title: '範本三', categoryIds: ['c2'], links: [], createdAt: Date.now(),
+      content: '這是「個人洞見」的第三張範本卡片。\n\n你的視角是獨一無二的。把那些「只有你才會這樣想」的念頭記下來。'
+    },
+    {
+      id: 'k7', title: '範本一', categoryIds: ['c3'], links: [], createdAt: Date.now(),
+      content: '這是「知識蒸餾」的第一張範本卡片。\n\n將你讀到的、聽到的、學到的提煉成精華。用自己的話說出來，才真的學到了。'
+    },
+    {
+      id: 'k8', title: '範本二', categoryIds: ['c3'], links: [], createdAt: Date.now(),
+      content: '這是「知識蒸餾」的第二張範本卡片。\n\n知識只有內化才能成為你的一部分。一個好概念，能用一句話解釋清楚嗎？'
+    },
+    {
+      id: 'k9', title: '範本三', categoryIds: ['c3'], links: [], createdAt: Date.now(),
+      content: '這是「知識蒸餾」的第三張範本卡片。\n\n嘗試找出不同知識之間的連結。跨領域的洞見往往最有力量。'
+    },
+  ]
+};
+
+const STORAGE_KEY = 'peijia-cardbox-v3';
+const SEED_LINKS  = { k1: ['k4'], k4: ['k7'] };
+
+function loadDB() {
+  try {
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) return JSON.parse(s);
+
+    const old = ['peijia-cardbox-v2', 'peijia-cardbox-v1']
+      .map(k => localStorage.getItem(k)).find(Boolean);
+    if (old) {
+      const data = JSON.parse(old);
+      data.cards.forEach(c => {
+        if (!c.links || c.links.length === 0) {
+          c.links = SEED_LINKS[c.id] || [];
+        }
+      });
+      return data;
+    }
+
+    return JSON.parse(JSON.stringify(SEED));
+  } catch {
+    return JSON.parse(JSON.stringify(SEED));
+  }
+}
+
+function saveDB() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+  localStorage.removeItem('peijia-cardbox-v1');
+  localStorage.removeItem('peijia-cardbox-v2');
+}
+
+let db = loadDB();
+
+// ════════════════════════════════════════════
+//  Navigation state
+// ════════════════════════════════════════════
+
+let view = 'home';
+let activeCatId  = null;
+let activeCardId = null;
+let editCardId   = null;
+let editCatId    = null;
+let selectedCats  = [];
+let selectedLinks = [];
+
+function goBack() {
+  if (view === 'card') {
+    activeCatId ? showCategory(activeCatId) : showHome();
+  } else {
+    showHome();
+  }
+}
+
+function showHome() {
+  view = 'home'; activeCatId = null; activeCardId = null;
+  document.getElementById('breadcrumb').textContent = '';
+  document.getElementById('home-btn').classList.add('hidden');
+  document.getElementById('back-btn').classList.add('hidden');
+  const fab = document.getElementById('fab');
+  fab.classList.remove('hidden');
+  fab.onclick = openCategoryModal;
+  fab.title = '新增目錄';
+  renderHome();
+}
+
+function showCategory(catId) {
+  view = 'category'; activeCatId = catId; activeCardId = null;
+  const cat = db.categories.find(c => c.id === catId);
+  document.getElementById('breadcrumb').textContent = '培嘉卡片盒  ›  ' + cat.name;
+  document.getElementById('home-btn').classList.remove('hidden');
+  document.getElementById('back-btn').classList.remove('hidden');
+  document.getElementById('fab').classList.add('hidden');
+  renderCategory(catId);
+}
+
+function showCard(cardId, fromCatId) {
+  view = 'card'; activeCardId = cardId;
+  if (fromCatId) activeCatId = fromCatId;
+  const card = db.cards.find(c => c.id === cardId);
+  const catNames = card.categoryIds
+    .map(id => db.categories.find(x => x.id === id)?.name)
+    .filter(Boolean).join('  ·  ');
+  document.getElementById('breadcrumb').textContent = catNames + '  ›  ' + card.title;
+  document.getElementById('home-btn').classList.remove('hidden');
+  document.getElementById('back-btn').classList.remove('hidden');
+  document.getElementById('fab').classList.add('hidden');
+  renderCardDetail(cardId);
+}
+
+// ════════════════════════════════════════════
+//  Escape helper
+// ════════════════════════════════════════════
+
+function h(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ════════════════════════════════════════════
+//  Render — Home
+// ════════════════════════════════════════════
+
+function renderHome() {
+  const el = document.getElementById('main-content');
+  const cats = db.categories;
+
+  if (!cats.length) {
+    el.innerHTML = `
+      <div class="empty-state">
+        <div class="es-icon">📂</div>
+        <p>還沒有任何目錄，先建立第一個吧</p>
+        <button class="ph-btn primary" onclick="openCategoryModal()"><i data-lucide="folder-plus" class="lucide icon-md"></i> 新增目錄</button>
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="ph-section-header">
+      <h2>目錄</h2>
+      <button class="ph-btn sm" onclick="openCategoryModal()"><i data-lucide="folder-plus" class="lucide icon-sm"></i> 新增目錄</button>
+    </div>
+    <div class="tiles">
+      ${cats.map((cat, i) => {
+        const cnt = db.cards.filter(c => c.categoryIds.includes(cat.id)).length;
+        const color = catColor(i);
+        return `
+          <article class="tile" style="--tile-color:${color}" onclick="showCategory('${cat.id}')">
+            <div class="tile-acts">
+              <button class="tile-act-btn" title="編輯" onclick="event.stopPropagation();openEditCategory('${cat.id}')"><i data-lucide="pencil" class="lucide icon-sm"></i></button>
+              <button class="tile-act-btn danger" title="刪除" onclick="event.stopPropagation();confirmDeleteCat('${cat.id}')"><i data-lucide="trash-2" class="lucide icon-sm"></i></button>
+            </div>
+            <div class="tile-body">
+              <h3>${h(cat.name)}</h3>
+              <div class="tile-count">${cnt} 張卡片</div>
+              <div class="tile-enter">進入 →</div>
+            </div>
+          </article>`;
+      }).join('')}
+    </div>`;
+}
+
+// ════════════════════════════════════════════
+//  Render — Category
+// ════════════════════════════════════════════
+
+function renderCategory(catId) {
+  const el = document.getElementById('main-content');
+  const cards = db.cards.filter(c => c.categoryIds.includes(catId));
+  const catIdx = db.categories.findIndex(c => c.id === catId);
+  const accent = catColor(catIdx);
+
+  el.innerHTML = `
+    <div class="ph-section-header">
+      <h2>卡片</h2>
+      <button class="ph-btn sm" onclick="openCardModal('${catId}')"><i data-lucide="file-plus" class="lucide icon-sm"></i> 新增卡片</button>
+    </div>
+    ${!cards.length ? `
+      <div class="empty-state">
+        <div class="es-icon">🗒</div>
+        <p>這個目錄還沒有卡片</p>
+        <button class="ph-btn primary" onclick="openCardModal('${catId}')"><i data-lucide="file-plus" class="lucide icon-md"></i> 新增第一張卡片</button>
+      </div>` : `
+    <div class="cards-grid">
+      ${cards.map(card => `
+        <div class="note-card" style="--card-accent:${accent}" onclick="showCard('${card.id}','${catId}')">
+          <div class="card-acts">
+            <button class="card-act-btn" title="編輯" onclick="event.stopPropagation();openEditCard('${card.id}')"><i data-lucide="pencil" class="lucide icon-sm"></i></button>
+            <button class="card-act-btn danger" title="刪除" onclick="event.stopPropagation();confirmDeleteCard('${card.id}')"><i data-lucide="trash-2" class="lucide icon-sm"></i></button>
+          </div>
+          <h4>${h(card.title)}</h4>
+          <p class="preview">${h(card.content)}</p>
+          <div class="card-tags">
+            ${card.categoryIds.map(id => {
+              const c = db.categories.find(x => x.id === id);
+              return c ? `<span class="tag">${h(c.name)}</span>` : '';
+            }).join('')}
+          </div>
+        </div>`).join('')}
+    </div>`}`;
+}
+
+// ════════════════════════════════════════════
+//  Render — Card Detail
+// ════════════════════════════════════════════
+
+function linkedCardHTML(linkedCard) {
+  const catNames = linkedCard.categoryIds
+    .map(id => db.categories.find(x => x.id === id)?.name).filter(Boolean).join(' · ');
+  return `
+    <div class="linked-card-item" onclick="showCard('${linkedCard.id}', null)">
+      <div class="lc-cats">${h(catNames)}</div>
+      <div class="lc-title">${h(linkedCard.title)}</div>
+      <div class="lc-preview">${h(linkedCard.content)}</div>
+    </div>`;
+}
+
+function renderCardDetail(cardId) {
+  const el = document.getElementById('main-content');
+  const card = db.cards.find(c => c.id === cardId);
+
+  const linkedCards = (card.links || [])
+    .map(id => db.cards.find(c => c.id === id)).filter(Boolean);
+  const backlinks = db.cards.filter(c => c.id !== cardId && (c.links || []).includes(cardId));
+
+  const linkedSection = `
+    <div class="linked-section">
+      <div class="linked-section-header">
+        <span class="linked-section-title">相關卡片</span>
+        ${linkedCards.length ? `<span class="linked-count">${linkedCards.length}</span>` : ''}
+        <button class="ph-btn sm" style="margin-left:auto" onclick="openLinkManager('${card.id}')"><i data-lucide="link-2" class="lucide icon-sm"></i> 管理連結</button>
+      </div>
+      ${linkedCards.length
+        ? `<div class="linked-cards-grid">${linkedCards.map(linkedCardHTML).join('')}</div>`
+        : `<p style="font-size:0.82rem;color:var(--ph-text-lt)">尚無連結，點「管理連結」開始建立</p>`}
+    </div>`;
+
+  const backlinksSection = backlinks.length ? `
+    <div class="linked-section">
+      <div class="linked-section-header">
+        <span class="linked-section-title">被哪些卡片連結</span>
+        <span class="linked-count">${backlinks.length}</span>
+      </div>
+      <div class="linked-cards-grid">
+        ${backlinks.map(linkedCardHTML).join('')}
+      </div>
+    </div>` : '';
+
+  el.innerHTML = `
+    <div class="card-detail">
+      <div class="card-detail-top">
+        <h2>${h(card.title)}</h2>
+        <div class="detail-btns">
+          <button class="ph-btn sm" onclick="openEditCard('${card.id}')"><i data-lucide="pencil" class="lucide icon-sm"></i> 編輯</button>
+          <button class="ph-btn sm danger" onclick="confirmDeleteCard('${card.id}')"><i data-lucide="trash-2" class="lucide icon-sm"></i> 刪除</button>
+        </div>
+      </div>
+      <div class="content">${h(card.content)}</div>
+      <div class="card-meta">
+        <span class="card-meta-label">所屬目錄</span>
+        <div class="tag-list">
+          ${card.categoryIds.map(id => {
+            const c = db.categories.find(x => x.id === id);
+            return c
+              ? `<span class="tag clickable" onclick="showCategory('${id}')">${h(c.name)}</span>`
+              : '';
+          }).join('')}
+        </div>
+      </div>
+      ${linkedSection}
+      ${backlinksSection}
+    </div>`;
+}
+
+// ════════════════════════════════════════════
+//  Card Modal
+// ════════════════════════════════════════════
+
+function openCardModal(defaultCatId) {
+  editCardId = null;
+  document.getElementById('card-modal-title').textContent = '新增卡片';
+  document.getElementById('card-title').value = '';
+  document.getElementById('card-content').value = '';
+  const pre = defaultCatId ? [defaultCatId] : (activeCatId ? [activeCatId] : []);
+  buildCatChips(pre);
+  initLinkSearch([]);
+  document.getElementById('card-modal').classList.remove('hidden');
+  setTimeout(() => document.getElementById('card-title').focus(), 50);
+}
+
+function openEditCard(cardId) {
+  editCardId = cardId;
+  const card = db.cards.find(c => c.id === cardId);
+  document.getElementById('card-modal-title').textContent = '編輯卡片';
+  document.getElementById('card-title').value = card.title;
+  document.getElementById('card-content').value = card.content;
+  buildCatChips(card.categoryIds);
+  initLinkSearch(card.links || []);
+  document.getElementById('card-modal').classList.remove('hidden');
+  setTimeout(() => document.getElementById('card-title').focus(), 50);
+}
+
+function buildCatChips(selected) {
+  selectedCats = [...selected];
+  document.getElementById('cat-chips').innerHTML = db.categories.map(cat => `
+    <div class="cat-chip ${selectedCats.includes(cat.id) ? 'selected' : ''}"
+         onclick="toggleCatChip('${cat.id}', this)">
+      ${h(cat.name)}
+    </div>`).join('');
+}
+
+function toggleCatChip(catId, el) {
+  if (selectedCats.includes(catId)) {
+    selectedCats = selectedCats.filter(id => id !== catId);
+    el.classList.remove('selected');
+  } else {
+    selectedCats.push(catId);
+    el.classList.add('selected');
+  }
+}
+
+function saveCard() {
+  const title   = document.getElementById('card-title').value.trim();
+  const content = document.getElementById('card-content').value.trim();
+  if (!title) { alert('請輸入卡片標題'); return; }
+
+  if (editCardId) {
+    const card = db.cards.find(c => c.id === editCardId);
+    card.title = title;
+    card.content = content;
+    card.categoryIds = [...selectedCats];
+    card.links = [...selectedLinks];
+  } else {
+    db.cards.push({ id: uid(), title, content, categoryIds: [...selectedCats], links: [...selectedLinks], createdAt: Date.now() });
+  }
+
+  saveDB();
+  closeModal('card-modal');
+  refresh();
+}
+
+// ════════════════════════════════════════════
+//  Link Manager (card detail)
+// ════════════════════════════════════════════
+
+let lmCardId = null;
+let lmLinks  = [];
+
+function openLinkManager(cardId) {
+  lmCardId = cardId;
+  const card = db.cards.find(c => c.id === cardId);
+  lmLinks = [...(card.links || [])];
+  document.getElementById('lm-search').value = '';
+  document.getElementById('lm-results').innerHTML = '';
+  renderLMTags();
+  document.getElementById('link-manager-modal').classList.remove('hidden');
+  setTimeout(() => document.getElementById('lm-search').focus(), 50);
+}
+
+function filterLMSearch() {
+  const q = document.getElementById('lm-search').value.trim().toLowerCase();
+  const resultsEl = document.getElementById('lm-results');
+  const candidates = db.cards.filter(c => c.id !== lmCardId);
+  const filtered = q
+    ? candidates.filter(c => c.title.toLowerCase().includes(q) || c.content.toLowerCase().includes(q))
+    : candidates.slice(0, 8);
+  if (!filtered.length) { resultsEl.innerHTML = ''; return; }
+  resultsEl.innerHTML = filtered.map(card => {
+    const isLinked = lmLinks.includes(card.id);
+    const catNames = card.categoryIds
+      .map(id => db.categories.find(x => x.id === id)?.name).filter(Boolean).join(' · ');
+    return `
+      <div class="link-result-item ${isLinked ? 'is-linked' : ''}" onclick="toggleLMLink('${card.id}')">
+        <div class="lr-left">
+          <span>${h(card.title)}</span>
+          <span class="lr-meta">${h(catNames)}</span>
+        </div>
+        <span class="lr-check">${isLinked ? '✓' : '＋'}</span>
+      </div>`;
+  }).join('');
+}
+
+function toggleLMLink(cardId) {
+  if (lmLinks.includes(cardId)) {
+    lmLinks = lmLinks.filter(id => id !== cardId);
+  } else {
+    lmLinks.push(cardId);
+  }
+  renderLMTags();
+  filterLMSearch();
+}
+
+function renderLMTags() {
+  document.getElementById('lm-tags').innerHTML = lmLinks.map(id => {
+    const card = db.cards.find(c => c.id === id);
+    if (!card) return '';
+    return `
+      <span class="linked-tag">
+        ${h(card.title)}
+        <button class="linked-tag-remove" onclick="toggleLMLink('${id}')">×</button>
+      </span>`;
+  }).join('');
+}
+
+function saveLinkManager() {
+  const card = db.cards.find(c => c.id === lmCardId);
+  card.links = [...lmLinks];
+  saveDB();
+  closeModal('link-manager-modal');
+  renderCardDetail(lmCardId);
+}
+
+// ════════════════════════════════════════════
+//  Link search (card modal)
+// ════════════════════════════════════════════
+
+function initLinkSearch(linked) {
+  selectedLinks = [...linked];
+  document.getElementById('link-search').value = '';
+  document.getElementById('link-results').innerHTML = '';
+  renderLinkedTags();
+}
+
+function filterLinkSearch() {
+  const q = document.getElementById('link-search').value.trim().toLowerCase();
+  const resultsEl = document.getElementById('link-results');
+  const candidates = db.cards.filter(c => c.id !== editCardId);
+  const filtered = q
+    ? candidates.filter(c => c.title.toLowerCase().includes(q) || c.content.toLowerCase().includes(q))
+    : candidates.slice(0, 8);
+
+  if (!filtered.length) { resultsEl.innerHTML = ''; return; }
+
+  resultsEl.innerHTML = filtered.map(card => {
+    const isLinked = selectedLinks.includes(card.id);
+    const catNames = card.categoryIds
+      .map(id => db.categories.find(x => x.id === id)?.name).filter(Boolean).join(' · ');
+    return `
+      <div class="link-result-item ${isLinked ? 'is-linked' : ''}" onclick="toggleLink('${card.id}')">
+        <div class="lr-left">
+          <span>${h(card.title)}</span>
+          <span class="lr-meta">${h(catNames)}</span>
+        </div>
+        <span class="lr-check">${isLinked ? '✓' : '+'}</span>
+      </div>`;
+  }).join('');
+}
+
+function toggleLink(cardId) {
+  if (selectedLinks.includes(cardId)) {
+    selectedLinks = selectedLinks.filter(id => id !== cardId);
+  } else {
+    selectedLinks.push(cardId);
+  }
+  renderLinkedTags();
+  filterLinkSearch();
+}
+
+function renderLinkedTags() {
+  const el = document.getElementById('linked-tags');
+  el.innerHTML = selectedLinks.map(id => {
+    const card = db.cards.find(c => c.id === id);
+    if (!card) return '';
+    return `
+      <span class="linked-tag">
+        ${h(card.title)}
+        <button class="linked-tag-remove" onclick="toggleLink('${id}')" title="移除連結">×</button>
+      </span>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════
+//  Category Modal
+// ════════════════════════════════════════════
+
+function openCategoryModal() {
+  editCatId = null;
+  document.getElementById('cat-modal-title').textContent = '新增目錄';
+  document.getElementById('cat-name').value = '';
+  document.getElementById('category-modal').classList.remove('hidden');
+  setTimeout(() => document.getElementById('cat-name').focus(), 50);
+}
+
+function openEditCategory(catId) {
+  editCatId = catId;
+  const cat = db.categories.find(c => c.id === catId);
+  document.getElementById('cat-modal-title').textContent = '編輯目錄';
+  document.getElementById('cat-name').value = cat.name;
+  document.getElementById('category-modal').classList.remove('hidden');
+  setTimeout(() => document.getElementById('cat-name').focus(), 50);
+}
+
+function saveCategory() {
+  const name = document.getElementById('cat-name').value.trim();
+  if (!name) { alert('請輸入目錄名稱'); return; }
+
+  if (editCatId) {
+    db.categories.find(c => c.id === editCatId).name = name;
+  } else {
+    db.categories.push({ id: uid(), name, createdAt: Date.now() });
+  }
+
+  saveDB();
+  closeModal('category-modal');
+
+  if (editCatId && view === 'category' && activeCatId === editCatId) {
+    const cat = db.categories.find(c => c.id === editCatId);
+    document.getElementById('breadcrumb').textContent = '培嘉卡片盒  ›  ' + cat.name;
+  } else if (view === 'home') {
+    renderHome();
+  }
+}
+
+// ════════════════════════════════════════════
+//  Delete
+// ════════════════════════════════════════════
+
+function confirmDeleteCat(catId) {
+  const cat = db.categories.find(c => c.id === catId);
+  const cnt = db.cards.filter(c => c.categoryIds.includes(catId)).length;
+  document.getElementById('confirm-msg').textContent =
+    `確定要刪除「${cat.name}」目錄嗎？` +
+    (cnt ? `（${cnt} 張卡片不會被刪除，但會從此目錄中移除）` : '');
+  document.getElementById('confirm-ok').onclick = () => {
+    db.categories = db.categories.filter(c => c.id !== catId);
+    db.cards.forEach(card => {
+      card.categoryIds = card.categoryIds.filter(id => id !== catId);
+    });
+    saveDB();
+    closeModal('confirm-modal');
+    showHome();
+  };
+  document.getElementById('confirm-modal').classList.remove('hidden');
+}
+
+function confirmDeleteCard(cardId) {
+  const card = db.cards.find(c => c.id === cardId);
+  document.getElementById('confirm-msg').textContent = `確定要刪除「${card.title}」嗎？`;
+  document.getElementById('confirm-ok').onclick = () => {
+    db.cards = db.cards.filter(c => c.id !== cardId);
+    db.cards.forEach(c => { c.links = (c.links || []).filter(id => id !== cardId); });
+    saveDB();
+    closeModal('confirm-modal');
+    if (view === 'card') goBack();
+    else refresh();
+  };
+  document.getElementById('confirm-modal').classList.remove('hidden');
+}
+
+// ════════════════════════════════════════════
+//  Utilities
+// ════════════════════════════════════════════
+
+function refresh() {
+  if (view === 'home') renderHome();
+  else if (view === 'category') renderCategory(activeCatId);
+  else if (view === 'card') renderCardDetail(activeCardId);
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.add('hidden');
+}
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeModal(overlay.id);
+  });
+});
+
+document.getElementById('cat-name').addEventListener('keydown', e => {
+  if (e.key === 'Enter') saveCategory();
+});
+document.getElementById('card-title').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('card-content').focus();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    ['card-modal','category-modal','confirm-modal','link-manager-modal'].forEach(id => {
+      if (!document.getElementById(id).classList.contains('hidden')) closeModal(id);
+    });
+  }
+});
+
+// ════════════════════════════════════════════
+//  Boot
+// ════════════════════════════════════════════
+
+// Re-process Lucide icons after every innerHTML render
+const _origRenderHome     = renderHome;
+const _origRenderCategory = renderCategory;
+const _origRenderCardDetail = renderCardDetail;
+
+renderHome = function() {
+  _origRenderHome(...arguments);
+  lucide.createIcons();
+};
+renderCategory = function() {
+  _origRenderCategory(...arguments);
+  lucide.createIcons();
+};
+renderCardDetail = function() {
+  _origRenderCardDetail(...arguments);
+  lucide.createIcons();
+};
+
+showHome();
+// Process static HTML icons (header, modals, FAB)
+lucide.createIcons();
+</script>
+</body>
+</html>
